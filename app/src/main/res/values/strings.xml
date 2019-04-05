@@ -1,3 +1,11 @@
+<!--
+  ~ Copyright (c) 2019-2019.
+  -->
+
 <resources>
     <string name="app_name">SecretWeLook</string>
+    <string name="phone_number">Please input phone number</string>
+    <string name="verification_code">Please input verification code number</string>
+    <string name="get_verification_code">Get verification code</string>
+    <string name="login">Login</string>
 </resources>

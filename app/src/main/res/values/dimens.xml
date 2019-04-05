@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019-2019.
+  -->
+
+<resources>
+    <dimen name="margin_24_dp">24dp</dimen>
+    <dimen name="margin_8_dp">8dp</dimen>
+    <dimen name="size_20_sp">20sp</dimen>
+</resources>
