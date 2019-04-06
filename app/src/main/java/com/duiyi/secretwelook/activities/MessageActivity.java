@@ -11,15 +11,16 @@ import android.support.annotation.Nullable;
 import com.duiyi.secretwelook.R;
 
 /**
- * 展示动态内容的界面
+ * 展示消息的界面
  *
  * @author zhang
- * @since 2019/4/5
+ * @since 2019/4/6
  */
-public class TimeLineActivity extends ListActivity {
+public class MessageActivity extends ListActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.timeline_layout);
+
+        setContentView(R.layout.message_layout);
     }
 }
