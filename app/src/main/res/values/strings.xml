@@ -9,4 +9,9 @@
     <string name="get_verification_code">Get verification code</string>
     <string name="login">Login</string>
     <string name="publish_message">Publish message</string>
+    <string name="phone_number_cannot_be_empty">Phone number can not be empty</string>
+    <string name="fail_to_get_verification_code">Fail to get verification code</string>
+    <string name="success_to_get_verification_code">Get verification code success</string>
+    <string name="connecting">Connecting…</string>
+    <string name="connecting_to_server">Connecting server,please wait</string>
 </resources>
