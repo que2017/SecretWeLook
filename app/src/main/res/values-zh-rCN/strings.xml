@@ -9,4 +9,5 @@
     <string name="verification_code">请输入验证码</string>
     <string name="get_verification_code">获取验证码</string>
     <string name="login">登陆</string>
+    <string name="publish_message">发布消息</string>
 </resources>

@@ -19,6 +19,7 @@
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.TimeLineActivity" />
         <activity android:name=".activities.MessageActivity" />
+        <activity android:name=".activities.PubMessageActivity" />
     </application>
 
 </manifest>
