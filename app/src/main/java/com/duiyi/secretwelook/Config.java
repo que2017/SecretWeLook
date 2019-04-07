@@ -16,7 +16,8 @@ import android.content.SharedPreferences;
 public class Config {
     private static final String TAG = Config.class.getSimpleName();
 
-    public static final String SERVER_URL = "http://demo.eoeschool.com/api/v1/nimings/io";
+//    public static final String SERVER_URL = "http://demo.eoeschool.com/api/v1/nimings/io";
+    public static final String SERVER_URL = "http://192.168.199.186:8080/SecretWeLookServer/api.jsp";
     public static final String KEY_ACTION = "action";
     public static final String KEY_PHONE = "phone";
     public static final String ACTION_GET_CODE = "send_pass";

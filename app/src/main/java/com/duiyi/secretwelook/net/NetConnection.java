@@ -75,6 +75,7 @@ public class NetConnection {
                             conn.setDoOutput(true);
                             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), Config.CHARSET));
                             bw.write(paramStr.toString());
+                            bw.flush();
                             break;
                         case GET: // 默认方式为Get
                         default:
