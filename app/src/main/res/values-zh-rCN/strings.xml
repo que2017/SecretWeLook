@@ -10,9 +10,11 @@
     <string name="get_verification_code">获取验证码</string>
     <string name="login">登陆</string>
     <string name="publish_message">发布消息</string>
-    <string name="phone_number_cannot_be_empty">电话号码不能为空</string>
+    <string name="phone_number_cannot_be_empty">手机号码不能为空</string>
     <string name="fail_to_get_verification_code">获取验证码失败</string>
     <string name="success_to_get_verification_code">获取验证码成功</string>
     <string name="connecting">连接中…</string>
     <string name="connecting_to_server">正在连接服务器，请稍等</string>
+    <string name="verify_code_cannot_be_empty">验证码不能为空</string>
+    <string name="fail_to_login">登陆失败，请稍后重试</string>
 </resources>

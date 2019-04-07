@@ -6,6 +6,7 @@ package com.duiyi.secretwelook.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,8 +19,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.duiyi.secretwelook.Config;
 import com.duiyi.secretwelook.R;
 import com.duiyi.secretwelook.net.GetVerificationCode;
+import com.duiyi.secretwelook.net.Login;
+import com.duiyi.secretwelook.tools.MD5Tool;
 
 /**
  * 登陆界面
@@ -70,10 +74,46 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 getVerifyCode();
                 break;
             case R.id.login:
+                loginWeLook();
                 break;
             default:
                 break;
         }
+    }
+
+    private void loginWeLook() {
+        String phone = mPhoneNumber.getText().toString();
+        String code = mVerificationCode.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, R.string.phone_number_cannot_be_empty, Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(code)) {
+            Toast.makeText(this, R.string.verify_code_cannot_be_empty, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final String phoneMD5 = MD5Tool.md5(phone);
+        new Login(phoneMD5, code, new Login.SuccessCallback() {
+            @Override
+            public void onSuccess(String token) {
+                // 缓存返回的token以及手机号md5值
+                Config.cacheToken(LoginActivity.this, token);
+                Config.cachePhoneMD5(LoginActivity.this, phoneMD5);
+
+                Intent intent = new Intent(LoginActivity.this, TimeLineActivity.class);
+                intent.putExtra(Config.KEY_TOKEN, token);
+                intent.putExtra(Config.KEY_PHONE_MD5, phoneMD5);
+                startActivity(intent);
+
+                finish();
+            }
+        }, new Login.FailCallback() {
+            @Override
+            public void onFail() {
+                Toast.makeText(LoginActivity.this, R.string.fail_to_login, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void getVerifyCode() {

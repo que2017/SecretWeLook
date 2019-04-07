@@ -15,47 +15,49 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 获取短信验证码
- *
+ * http登陆
+ * <p>
  * 请求值：
- * action=send_pass
- * phone=手机号码
- *
+ * action=login
+ * phone_md5=手机号的md5值
+ * code=短信验证码
+ * <p>
  * 返回值：
  * status=1成功，0失败
+ * token=对应手机号的token值
  *
  * @author zhang
- * @since 2019/4/6
+ * @since 2019/4/7
  */
-public class GetVerificationCode {
-    private static final String TAG = GetVerificationCode.class.getSimpleName();
+public class Login {
+    private static final String TAG = Login.class.getSimpleName();
 
     public static interface SuccessCallback {
-        void onSuccess();
+        void onSuccess(String result);
     }
 
     public static interface FailCallback {
         void onFail();
     }
 
-    public GetVerificationCode(String phone, final SuccessCallback success, final FailCallback fail) {
+    public Login(String phoneMD5, String code, final SuccessCallback success, final FailCallback fail) {
         Map<String, String> values = new HashMap<>();
-        values.put(Config.KEY_ACTION, Config.ACTION_GET_CODE);
-        values.put(Config.KEY_PHONE, phone);
+        values.put(Config.KEY_ACTION, Config.ACTION_LOGIN);
+        values.put(Config.KEY_PHONE_MD5, phoneMD5);
+        values.put(Config.KEY_CODE, code);
 
         new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
             public void onSuccess(String result) {
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    switch (jsonObject.getInt(Config.KEY_STATUS)) {
+                    JSONObject json = new JSONObject(result);
+                    switch (json.getInt(Config.KEY_STATUS)) {
                         case Config.RESULT_STATUS_SUCCESS:
                             if (success != null) {
-                                success.onSuccess();
+                                success.onSuccess(json.getString(Config.KEY_TOKEN));
                             }
                             break;
                         case Config.RESULT_STATUS_FAIL:
-                        case Config.RESULT_STATUS_INVALID_TOKEN:
                         default:
                             if (fail != null) {
                                 fail.onFail();
