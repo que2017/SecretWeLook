@@ -27,7 +27,7 @@ public class UploadContacts {
         void onSuccess();
     }
 
-    private static interface FailCallback {
+    public static interface FailCallback {
         void onFail(int errorCode);
     }
 

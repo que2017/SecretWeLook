@@ -4,8 +4,12 @@
 
 package com.duiyi.secretwelook;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 /**
  * 配置相关类
@@ -37,6 +41,8 @@ public class Config {
 
     public static final String APP_ID = "com.duiyi.secretwelook";
     public static final String CHARSET = "utf-8";
+
+    public static final int CONTACTS_PERMISSION = 1;
 
     /**
      * 获取缓存的token
@@ -80,5 +86,19 @@ public class Config {
         SharedPreferences.Editor editor = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).edit();
         editor.putString(KEY_PHONE_MD5, phoneMD5);
         editor.apply();
+    }
+
+    /**
+     * 检查对应权限是否开启
+     *
+     * @param context     上下文
+     * @param permission  需要检查的权限
+     * @param requestCode 请求码
+     */
+    public static void checkPermission(Context context, String permission, int requestCode) {
+        if (ContextCompat.checkSelfPermission(context, permission)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
+        }
     }
 }
