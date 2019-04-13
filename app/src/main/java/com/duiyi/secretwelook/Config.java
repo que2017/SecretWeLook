@@ -16,20 +16,24 @@ import android.content.SharedPreferences;
 public class Config {
     private static final String TAG = Config.class.getSimpleName();
 
-//    public static final String SERVER_URL = "http://demo.eoeschool.com/api/v1/nimings/io";
+    // public static final String SERVER_URL = "http://demo.eoeschool.com/api/v1/nimings/io";
     public static final String SERVER_URL = "http://192.168.199.186:8080/SecretWeLookServer/api.jsp";
+
     public static final String KEY_ACTION = "action";
+    public static final String KEY_CODE = "code";
+    public static final String KEY_CONTACTS = "contacts";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_PHONE_MD5 = "phone_md5";
-    public static final String KEY_CODE = "code";
+    public static final String KEY_STATUS = "status";
     public static final String KEY_TOKEN = "token";
+
     public static final String ACTION_GET_CODE = "send_pass";
     public static final String ACTION_LOGIN = "login";
+    public static final String ACTION_UPLOAD_CONTACTS = "upload_contacts";
 
-    public static final String KEY_STATUS = "status";
-    public static final int RESULT_STATUS_SUCCESS = 1;
     public static final int RESULT_STATUS_FAIL = 0;
     public static final int RESULT_STATUS_INVALID_TOKEN = 2;
+    public static final int RESULT_STATUS_SUCCESS = 1;
 
     public static final String APP_ID = "com.duiyi.secretwelook";
     public static final String CHARSET = "utf-8";
@@ -48,7 +52,7 @@ public class Config {
      * 缓存token
      *
      * @param context 上下文
-     * @param token token
+     * @param token   token
      */
     public static void cacheToken(Context context, String token) {
         SharedPreferences.Editor editor = context.getSharedPreferences(APP_ID, Context.MODE_PRIVATE).edit();
@@ -69,7 +73,7 @@ public class Config {
     /**
      * 缓存手机号的MD5
      *
-     * @param context 上下文
+     * @param context  上下文
      * @param phoneMD5 手机号的md5
      */
     public static void cachePhoneMD5(Context context, String phoneMD5) {
