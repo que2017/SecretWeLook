@@ -26,9 +26,12 @@ public class Config {
     public static final String KEY_ACTION = "action";
     public static final String KEY_CODE = "code";
     public static final String KEY_CONTACTS = "contacts";
+    public static final String KEY_PAGE = "page";
+    public static final String KEY_PERPAGE = "perpage";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_PHONE_MD5 = "phone_md5";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_TIME_LINE = "timeline";
     public static final String KEY_TOKEN = "token";
 
     public static final String ACTION_GET_CODE = "send_pass";
