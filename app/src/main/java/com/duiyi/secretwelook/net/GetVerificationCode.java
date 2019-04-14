@@ -64,6 +64,9 @@ public class GetVerificationCode {
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Parse result error: " + e.getMessage());
+                    if (fail != null) {
+                        fail.onFail();
+                    }
                 }
             }
         }, new NetConnection.FailCallback() {

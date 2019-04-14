@@ -63,6 +63,9 @@ public class UploadContacts {
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Parse result error: " + e.getMessage());
+                    if (fail != null) {
+                        fail.onFail(Config.RESULT_STATUS_FAIL);
+                    }
                 }
             }
         }, new NetConnection.FailCallback() {
