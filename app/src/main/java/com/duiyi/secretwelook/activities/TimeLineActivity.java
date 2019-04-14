@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.duiyi.secretwelook.Config;
@@ -104,5 +106,17 @@ public class TimeLineActivity extends ListActivity {
                 Toast.makeText(TimeLineActivity.this, R.string.fail_to_load_timeline_data, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Message msg = mAdapter.getItem(position);
+        Intent intent = new Intent(TimeLineActivity.this, MessageActivity.class);
+        intent.putExtra(Config.KEY_MSG, msg.getMsg());
+        intent.putExtra(Config.KEY_MSG_ID, msg.getMsgId());
+        intent.putExtra(Config.KEY_PHONE_MD5, msg.getPhoneMD5());
+        startActivity(intent);
     }
 }
