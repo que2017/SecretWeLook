@@ -31,7 +31,7 @@ import com.duiyi.secretwelook.tools.MD5Tool;
  * @author zhang
  * @since 2019/4/5
  */
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int SPACE_MARGIN = 24 * 2 + 8;
     private static final double MAX_WIDTH = 2.0 / 3.0;
@@ -94,9 +94,13 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         }
 
         final String phoneMD5 = MD5Tool.md5(phone);
+        final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting),
+                getResources().getString(R.string.connecting_to_server));
         new Login(phoneMD5, code, new Login.SuccessCallback() {
             @Override
             public void onSuccess(String token) {
+                pd.dismiss();
+
                 // 缓存返回的token以及手机号md5值
                 Config.cacheToken(LoginActivity.this, token);
                 Config.cachePhoneMD5(LoginActivity.this, phoneMD5);
@@ -111,6 +115,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         }, new Login.FailCallback() {
             @Override
             public void onFail() {
+                pd.dismiss();
                 Toast.makeText(LoginActivity.this, R.string.fail_to_login, Toast.LENGTH_LONG).show();
             }
         });
@@ -123,7 +128,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
             return;
         }
 
-        final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting), getResources().getString(R.string.connecting_to_server));
+        final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting),
+                getResources().getString(R.string.connecting_to_server));
         new GetVerificationCode(phone, new GetVerificationCode.SuccessCallback() {
             @Override
             public void onSuccess() {

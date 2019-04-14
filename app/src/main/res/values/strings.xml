@@ -16,5 +16,6 @@
     <string name="connecting_to_server">Connecting server,please wait</string>
     <string name="verify_code_cannot_be_empty">Verification code can not be empty</string>
     <string name="fail_to_login">Fail to login,please try again later</string>
+    <string name="fail_to_load_timeline_data">Fail to load message,please try again later</string>
     <string name="contacts_permission_not_open">Read contacts permission have not opened!</string>
 </resources>
