@@ -101,9 +101,14 @@ public class TimeLineActivity extends ListActivity {
             }
         }, new TimeLine.FailCallback() {
             @Override
-            public void onFail() {
+            public void onFail(int errorCode) {
                 pd.dismiss();
-                Toast.makeText(TimeLineActivity.this, R.string.fail_to_load_timeline_data, Toast.LENGTH_SHORT).show();
+                if (errorCode == Config.RESULT_STATUS_INVALID_TOKEN) {
+                    startActivity(new Intent(TimeLineActivity.this, LoginActivity.class));
+                    finish();
+                } else {
+                    Toast.makeText(TimeLineActivity.this, R.string.fail_to_load_timeline_data, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

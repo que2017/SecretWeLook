@@ -15,13 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Http获取朋友圈消息
+ * Http获取评论
  *
  * @author zhang
- * @since 2019/4/13
+ * @since 2019/4/15
  */
-public class TimeLine {
-    private static final String TAG = TimeLine.class.getSimpleName();
+public class GetComment {
+    private static final String TAG = GetComment.class.getSimpleName();
 
     public static interface SuccessCallback {
         void onSuccess(String result);
@@ -31,13 +31,14 @@ public class TimeLine {
         void onFail(int errorCode);
     }
 
-    public TimeLine(String phoneMD5, String token, int page, int perpage, final SuccessCallback success, final FailCallback fail) {
+    public GetComment(String phoneMD5, String token, int page, int perpage, String msgId, final SuccessCallback success, final FailCallback fail) {
         Map<String, String> values = new HashMap<>();
-        values.put(Config.KEY_ACTION, Config.KEY_TIME_LINE);
+        values.put(Config.KEY_ACTION, Config.KEY_GET_COMMENT);
         values.put(Config.KEY_PHONE_MD5, phoneMD5);
         values.put(Config.KEY_TOKEN, token);
         values.put(Config.KEY_PAGE, String.valueOf(page));
         values.put(Config.KEY_PERPAGE, String.valueOf(perpage));
+        values.put(Config.KEY_MSG_ID, msgId);
 
         new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
             @Override
