@@ -122,6 +122,7 @@ public class TimeLineActivity extends ListActivity {
         intent.putExtra(Config.KEY_MSG, msg.getMsg());
         intent.putExtra(Config.KEY_MSG_ID, msg.getMsgId());
         intent.putExtra(Config.KEY_PHONE_MD5, msg.getPhoneMD5());
+        intent.putExtra(Config.KEY_TOKEN, mToken);
         startActivity(intent);
     }
 }

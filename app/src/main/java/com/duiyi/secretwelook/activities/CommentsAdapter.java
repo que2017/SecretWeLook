@@ -12,35 +12,35 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.duiyi.secretwelook.R;
-import com.duiyi.secretwelook.net.Message;
+import com.duiyi.secretwelook.net.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 展示朋友圈消息的adapter
+ * 评论列表adapter
  *
  * @author zhang
- * @since 2019/4/14
+ * @since 2019/4/21
  */
-public class TimeLineMessageListAdapter extends BaseAdapter {
-    private static final String TAG = TimeLineMessageListAdapter.class.getSimpleName();
+public class CommentsAdapter extends BaseAdapter {
+    private static final String TAG = CommentsAdapter.class.getSimpleName();
 
     private Context mContext;
-    private List<Message> data = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
-    public TimeLineMessageListAdapter(Context context) {
+    public CommentsAdapter(Context context) {
         mContext = context;
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return comments.size();
     }
 
     @Override
-    public Message getItem(int position) {
-        return data.get(position);
+    public Comment getItem(int position) {
+        return comments.get(position);
     }
 
     @Override
@@ -51,21 +51,22 @@ public class TimeLineMessageListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.timeline_list_cell, null);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.comments_list_cell, null);
             convertView.setTag(new ListCell((TextView) convertView.findViewById(R.id.cellLabel)));
         }
         ListCell listCell = (ListCell) convertView.getTag();
-        listCell.getCellLabel().setText(getItem(position).getMsg());
+        Comment comment = getItem(position);
+        listCell.getCellLabel().setText(comment.getmContent());
         return convertView;
     }
 
-    public void addAll(List<Message> data) {
-        this.data.addAll(data);
+    public void addAll(List<Comment> data) {
+        comments.addAll(data);
         notifyDataSetChanged();
     }
 
     public void clear() {
-        data.clear();
+        comments.clear();
         notifyDataSetChanged();
     }
 

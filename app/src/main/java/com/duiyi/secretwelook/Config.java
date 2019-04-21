@@ -26,6 +26,8 @@ public class Config {
     public static final String KEY_ACTION = "action";
     public static final String KEY_CODE = "code";
     public static final String KEY_CONTACTS = "contacts";
+    public static final String KEY_CONTENT = "content";
+    public static final String KEY_COMMENTS = "comments";
     public static final String KEY_GET_COMMENT = "get_comment";
     public static final String KEY_MSG = "msg";
     public static final String KEY_MSG_ID = "msgId";
