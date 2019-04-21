@@ -35,6 +35,7 @@ public class Config {
     public static final String KEY_PERPAGE = "perpage";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_PHONE_MD5 = "phone_md5";
+    public static final String KEY_PUB_COMMENT = "pub_comment";
     public static final String KEY_STATUS = "status";
     public static final String KEY_TIME_LINE = "timeline";
     public static final String KEY_TOKEN = "token";
