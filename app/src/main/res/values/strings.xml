@@ -18,5 +18,7 @@
     <string name="fail_to_login">Fail to login,please try again later</string>
     <string name="fail_to_load_timeline_data">Fail to load message,please try again later</string>
     <string name="fail_to_get_comments">Fail to get comments,please try again later</string>
+    <string name="fail_to_publish_comment">Fail to publish comment,please try again later</string>
     <string name="contacts_permission_not_open">Read contacts permission have not opened!</string>
+    <string name="comment_cannot_be_empty">Comment content can not be empty</string>
 </resources>

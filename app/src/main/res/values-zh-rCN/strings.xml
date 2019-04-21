@@ -19,5 +19,7 @@
     <string name="fail_to_login">登陆失败，请稍后重试</string>
     <string name="fail_to_load_timeline_data">加载朋友圈消息失败，请稍后重试</string>
     <string name="fail_to_get_comments">加载评论失败，请稍后重试</string>
+    <string name="fail_to_publish_comment">发布评论失败，请稍后重试</string>
     <string name="contacts_permission_not_open">读取联系人权限没有开启！</string>
+    <string name="comment_cannot_be_empty">评论内容不能为空</string>
 </resources>
