@@ -54,6 +54,8 @@ public class Config {
 
     public static final int CONTACTS_PERMISSION = 1;
 
+    public static final int ACTIVITY_NEED_REFERSH = 1000;
+
     /**
      * 获取缓存的token
      *

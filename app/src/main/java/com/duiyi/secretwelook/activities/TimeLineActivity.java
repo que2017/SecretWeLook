@@ -85,12 +85,26 @@ public class TimeLineActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuPublishMessage:
-                startActivity(new Intent(TimeLineActivity.this, PubMessageActivity.class));
+                Intent intent = new Intent(TimeLineActivity.this, PubMessageActivity.class);
+                intent.putExtra(Config.KEY_PHONE_MD5, mPhoneMD5);
+                intent.putExtra(Config.KEY_TOKEN, mToken);
+                startActivityForResult(intent, 0);
                 break;
             default:
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Config.ACTIVITY_NEED_REFERSH:
+                loadMessage();
+                break;
+            default:
+                break;
+        }
     }
 
     private void loadMessage() {
@@ -117,6 +131,7 @@ public class TimeLineActivity extends ListActivity {
                 } catch (JSONException e) {
                     Log.i(TAG, "Parse result error: " + e.getMessage());
                 }
+                mAdapter.clear();
                 mAdapter.addAll(msg);
             }
         }, new TimeLine.FailCallback() {

@@ -9,6 +9,8 @@
     <string name="get_verification_code">Get verification code</string>
     <string name="login">Login</string>
     <string name="publish_message">Publish message</string>
+    <string name="publish_message_success">Publish message success</string>
+    <string name="publish_message_fail">Publish message fail</string>
     <string name="phone_number_cannot_be_empty">Phone number can not be empty</string>
     <string name="fail_to_get_verification_code">Fail to get verification code</string>
     <string name="success_to_get_verification_code">Get verification code success</string>
@@ -21,4 +23,5 @@
     <string name="fail_to_publish_comment">Fail to publish comment,please try again later</string>
     <string name="contacts_permission_not_open">Read contacts permission have not opened!</string>
     <string name="comment_cannot_be_empty">Comment content can not be empty</string>
+    <string name="message_cannot_be_empty">Message content can not be empty</string>
 </resources>
