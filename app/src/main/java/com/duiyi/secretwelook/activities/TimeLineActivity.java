@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -71,6 +73,24 @@ public class TimeLineActivity extends ListActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuPublishMessage:
+                startActivity(new Intent(TimeLineActivity.this, PubMessageActivity.class));
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     private void loadMessage() {
