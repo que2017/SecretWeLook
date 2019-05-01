@@ -19,11 +19,11 @@ public class Comment {
         mPhoneMD5 = phoneMD5;
     }
 
-    public String getmContent() {
+    public String getContent() {
         return mContent;
     }
 
-    public String getmPhoneMD5() {
+    public String getPhoneMD5() {
         return mPhoneMD5;
     }
 }

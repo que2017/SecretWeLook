@@ -16,11 +16,11 @@ import java.util.Map;
 
 /**
  * 获取短信验证码
- *
+ * <p>
  * 请求值：
  * action=send_pass
  * phone=手机号码
- *
+ * <p>
  * 返回值：
  * status=1成功，0失败
  *
@@ -30,51 +30,39 @@ import java.util.Map;
 public class GetVerificationCode {
     private static final String TAG = GetVerificationCode.class.getSimpleName();
 
-    public static interface SuccessCallback {
-        void onSuccess();
-    }
+    public GetVerificationCode(String phone, final NetCallback callback) {
+        if (callback == null) {
+            return;
+        }
 
-    public static interface FailCallback {
-        void onFail();
-    }
-
-    public GetVerificationCode(String phone, final SuccessCallback success, final FailCallback fail) {
         Map<String, String> values = new HashMap<>();
         values.put(Config.KEY_ACTION, Config.ACTION_GET_CODE);
         values.put(Config.KEY_PHONE, phone);
 
-        new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
+        new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetCallback() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     switch (jsonObject.getInt(Config.KEY_STATUS)) {
                         case Config.RESULT_STATUS_SUCCESS:
-                            if (success != null) {
-                                success.onSuccess();
-                            }
+                            callback.onSuccess(result);
                             break;
-                        case Config.RESULT_STATUS_FAIL:
                         case Config.RESULT_STATUS_INVALID_TOKEN:
+                        case Config.RESULT_STATUS_FAIL:
                         default:
-                            if (fail != null) {
-                                fail.onFail();
-                            }
+                            callback.onFail(Config.RESULT_STATUS_FAIL);
                             break;
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Parse result error: " + e.getMessage());
-                    if (fail != null) {
-                        fail.onFail();
-                    }
+                    callback.onFail(Config.RESULT_STATUS_FAIL);
                 }
             }
-        }, new NetConnection.FailCallback() {
+
             @Override
-            public void onFail() {
-                if (fail != null) {
-                    fail.onFail();
-                }
+            public void onFail(int errCode) {
+                callback.onFail(errCode);
             }
         }, values).requestHttp();
     }

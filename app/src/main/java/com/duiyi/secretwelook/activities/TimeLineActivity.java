@@ -20,6 +20,7 @@ import com.duiyi.secretwelook.Config;
 import com.duiyi.secretwelook.R;
 import com.duiyi.secretwelook.localdata.ContactsUtil;
 import com.duiyi.secretwelook.net.Message;
+import com.duiyi.secretwelook.net.NetCallback;
 import com.duiyi.secretwelook.net.TimeLine;
 import com.duiyi.secretwelook.net.UploadContacts;
 
@@ -55,17 +56,17 @@ public class TimeLineActivity extends ListActivity {
                 getResources().getString(R.string.connecting_to_server));
         mPhoneMD5 = getIntent().getStringExtra(Config.KEY_PHONE_MD5);
         mToken = getIntent().getStringExtra(Config.KEY_TOKEN);
-        new UploadContacts(mPhoneMD5, mToken, ContactsUtil.getContacts(this), new UploadContacts.SuccessCallback() {
+        new UploadContacts(mPhoneMD5, mToken, ContactsUtil.getContacts(this), new NetCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(String result) {
                 pd.dismiss();
                 loadMessage();
             }
-        }, new UploadContacts.FailCallback() {
+
             @Override
-            public void onFail(int errorCode) {
+            public void onFail(int errCode) {
                 pd.dismiss();
-                if (errorCode == Config.RESULT_STATUS_INVALID_TOKEN) {
+                if (errCode == Config.RESULT_STATUS_INVALID_TOKEN) {
                     startActivity(new Intent(TimeLineActivity.this, LoginActivity.class));
                     finish();
                 } else {
@@ -111,7 +112,7 @@ public class TimeLineActivity extends ListActivity {
         Log.i(TAG, ">>>>>>start load message<<<<<<");
         final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting),
                 getResources().getString(R.string.connecting_to_server));
-        new TimeLine(mPhoneMD5, mToken, 1, 20, new TimeLine.SuccessCallback() {
+        new TimeLine(mPhoneMD5, mToken, 1, 20, new NetCallback() {
             @Override
             public void onSuccess(String result) {
                 pd.dismiss();
@@ -134,11 +135,11 @@ public class TimeLineActivity extends ListActivity {
                 mAdapter.clear();
                 mAdapter.addAll(msg);
             }
-        }, new TimeLine.FailCallback() {
+
             @Override
-            public void onFail(int errorCode) {
+            public void onFail(int errCode) {
                 pd.dismiss();
-                if (errorCode == Config.RESULT_STATUS_INVALID_TOKEN) {
+                if (errCode == Config.RESULT_STATUS_INVALID_TOKEN) {
                     startActivity(new Intent(TimeLineActivity.this, LoginActivity.class));
                     finish();
                 } else {

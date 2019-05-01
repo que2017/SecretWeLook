@@ -29,24 +29,14 @@ public class NetConnection {
     private static final String TAG = NetConnection.class.getSimpleName();
     private String mUrl;
     private HttpMethod mHttpMethod;
-    private SuccessCallback mSuccessCallback;
-    private FailCallback mFailCallback;
-    private Map<String, String> mValuse;
+    private NetCallback mCallback;
+    private Map<String, String> mValues;
 
-    public static interface SuccessCallback {
-        void onSuccess(String result);
-    }
-
-    public static interface FailCallback {
-        void onFail();
-    }
-
-    public NetConnection(String url, HttpMethod method, SuccessCallback success, FailCallback fail, Map<String, String> values) {
+    public NetConnection(String url, HttpMethod method, NetCallback callback, Map<String, String> values) {
         mUrl = url;
         mHttpMethod = method;
-        mSuccessCallback = success;
-        mFailCallback = fail;
-        mValuse = values;
+        mCallback = callback;
+        mValues = values;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -61,7 +51,7 @@ public class NetConnection {
             protected String doInBackground(Void... voids) {
                 // 对请求参数进行包装
                 StringBuilder paramStr = new StringBuilder();
-                for (Map.Entry<String, String> entry : mValuse.entrySet()) {
+                for (Map.Entry<String, String> entry : mValues.entrySet()) {
                     paramStr.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
                 }
                 Log.i(TAG, "Request params: " + paramStr);
@@ -102,14 +92,13 @@ public class NetConnection {
 
             @Override
             protected void onPostExecute(String result) {
+                if (mCallback == null) {
+                    return;
+                }
                 if (result != null) {
-                    if (mSuccessCallback != null) {
-                        mSuccessCallback.onSuccess(result);
-                    }
+                    mCallback.onSuccess(result);
                 } else {
-                    if (mFailCallback != null) {
-                        mFailCallback.onFail();
-                    }
+                    mCallback.onFail(Config.RESULT_STATUS_FAIL);
                 }
                 super.onPostExecute(result);
             }

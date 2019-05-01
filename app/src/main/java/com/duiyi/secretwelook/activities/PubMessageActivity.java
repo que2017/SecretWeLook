@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.duiyi.secretwelook.Config;
 import com.duiyi.secretwelook.R;
+import com.duiyi.secretwelook.net.NetCallback;
 import com.duiyi.secretwelook.net.PubMessage;
 
 /**
@@ -54,7 +55,7 @@ public class PubMessageActivity extends Activity {
                 }
                 final ProgressDialog pd = ProgressDialog.show(PubMessageActivity.this, getResources().getString(R.string.connecting),
                         getResources().getString(R.string.connecting_to_server));
-                new PubMessage(mPhoneMD5, mToken, message, new PubMessage.SuccessCallback() {
+                new PubMessage(mPhoneMD5, mToken, message, new NetCallback() {
                     @Override
                     public void onSuccess(String result) {
                         pd.dismiss();
@@ -62,11 +63,11 @@ public class PubMessageActivity extends Activity {
                         Toast.makeText(PubMessageActivity.this, R.string.publish_message_success, Toast.LENGTH_SHORT).show();
                         finish();
                     }
-                }, new PubMessage.FailCallback() {
+
                     @Override
-                    public void onFail(int errorCode) {
+                    public void onFail(int errCode) {
                         pd.dismiss();
-                        if (errorCode == Config.RESULT_STATUS_INVALID_TOKEN) {
+                        if (errCode == Config.RESULT_STATUS_INVALID_TOKEN) {
                             startActivity(new Intent(PubMessageActivity.this, LoginActivity.class));
                         } else {
                             Toast.makeText(PubMessageActivity.this, R.string.publish_message_fail, Toast.LENGTH_SHORT).show();

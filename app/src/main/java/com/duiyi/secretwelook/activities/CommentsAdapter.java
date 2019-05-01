@@ -56,7 +56,7 @@ public class CommentsAdapter extends BaseAdapter {
         }
         ListCell listCell = (ListCell) convertView.getTag();
         Comment comment = getItem(position);
-        listCell.getCellLabel().setText(comment.getmContent());
+        listCell.getCellLabel().setText(comment.getContent());
         return convertView;
     }
 

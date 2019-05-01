@@ -20,6 +20,7 @@ import com.duiyi.secretwelook.Config;
 import com.duiyi.secretwelook.R;
 import com.duiyi.secretwelook.net.Comment;
 import com.duiyi.secretwelook.net.GetComment;
+import com.duiyi.secretwelook.net.NetCallback;
 import com.duiyi.secretwelook.net.PubComment;
 
 import org.json.JSONArray;
@@ -78,18 +79,18 @@ public class MessageActivity extends ListActivity {
                 }
 
                 final ProgressDialog pd = ProgressDialog.show(MessageActivity.this, getResources().getString(R.string.connecting), getResources().getString(R.string.connecting_to_server));
-                new PubComment(Config.getCachedPhoneMD5(MessageActivity.this), mToken, mCommentText.getText().toString(), mMsgId, new PubComment.SuccessCallback() {
+                new PubComment(Config.getCachedPhoneMD5(MessageActivity.this), mToken, mCommentText.getText().toString(), mMsgId, new NetCallback() {
                     @Override
                     public void onSuccess(String result) {
                         pd.dismiss();
                         mCommentText.setText("");
                         loadComments();
                     }
-                }, new PubComment.FailCallback() {
+
                     @Override
-                    public void onFail(int errorCode) {
+                    public void onFail(int errCode) {
                         pd.dismiss();
-                        if (errorCode == Config.RESULT_STATUS_INVALID_TOKEN) {
+                        if (errCode == Config.RESULT_STATUS_INVALID_TOKEN) {
                             startActivity(new Intent(MessageActivity.this, LoginActivity.class));
                             finish();
                         } else {
@@ -103,7 +104,7 @@ public class MessageActivity extends ListActivity {
 
     private void loadComments() {
         final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting), getResources().getString(R.string.connecting_to_server));
-        new GetComment(mPhoneMD5, mToken, 1, 20, mMsgId, new GetComment.SuccessCallback() {
+        new GetComment(mPhoneMD5, mToken, 1, 20, mMsgId, new NetCallback() {
             @Override
             public void onSuccess(String result) {
                 pd.dismiss();
@@ -122,11 +123,11 @@ public class MessageActivity extends ListActivity {
                     Log.e(TAG, "Parse result error: " + e.getMessage());
                 }
             }
-        }, new GetComment.FailCallback() {
+
             @Override
-            public void onFail(int errorCode) {
+            public void onFail(int errCode) {
                 pd.dismiss();
-                if (errorCode == Config.RESULT_STATUS_INVALID_TOKEN) {
+                if (errCode == Config.RESULT_STATUS_INVALID_TOKEN) {
                     startActivity(new Intent(MessageActivity.this, LoginActivity.class));
                     finish();
                 } else {

@@ -32,51 +32,39 @@ import java.util.Map;
 public class Login {
     private static final String TAG = Login.class.getSimpleName();
 
-    public static interface SuccessCallback {
-        void onSuccess(String result);
-    }
+    public Login(String phoneMD5, String code, final NetCallback callback) {
+        if (callback == null) {
+            return;
+        }
 
-    public static interface FailCallback {
-        void onFail();
-    }
-
-    public Login(String phoneMD5, String code, final SuccessCallback success, final FailCallback fail) {
         Map<String, String> values = new HashMap<>();
         values.put(Config.KEY_ACTION, Config.ACTION_LOGIN);
         values.put(Config.KEY_PHONE_MD5, phoneMD5);
         values.put(Config.KEY_CODE, code);
 
-        new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetConnection.SuccessCallback() {
+        new NetConnection(Config.SERVER_URL, HttpMethod.POST, new NetCallback() {
             @Override
             public void onSuccess(String result) {
                 try {
                     JSONObject json = new JSONObject(result);
                     switch (json.getInt(Config.KEY_STATUS)) {
                         case Config.RESULT_STATUS_SUCCESS:
-                            if (success != null) {
-                                success.onSuccess(json.getString(Config.KEY_TOKEN));
-                            }
+                            callback.onSuccess(json.getString(Config.KEY_TOKEN));
                             break;
                         case Config.RESULT_STATUS_FAIL:
                         default:
-                            if (fail != null) {
-                                fail.onFail();
-                            }
+                            callback.onFail(Config.RESULT_STATUS_FAIL);
                             break;
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, "Parse result error: " + e.getMessage());
-                    if (fail != null) {
-                        fail.onFail();
-                    }
+                    callback.onFail(Config.RESULT_STATUS_FAIL);
                 }
             }
-        }, new NetConnection.FailCallback() {
+
             @Override
-            public void onFail() {
-                if (fail != null) {
-                    fail.onFail();
-                }
+            public void onFail(int errCode) {
+                callback.onFail(errCode);
             }
         }, values).requestHttp();
     }

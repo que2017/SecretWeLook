@@ -15,7 +15,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +22,7 @@ import com.duiyi.secretwelook.Config;
 import com.duiyi.secretwelook.R;
 import com.duiyi.secretwelook.net.GetVerificationCode;
 import com.duiyi.secretwelook.net.Login;
+import com.duiyi.secretwelook.net.NetCallback;
 import com.duiyi.secretwelook.tools.MD5Tool;
 
 /**
@@ -96,7 +96,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         final String phoneMD5 = MD5Tool.md5(phone);
         final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting),
                 getResources().getString(R.string.connecting_to_server));
-        new Login(phoneMD5, code, new Login.SuccessCallback() {
+        new Login(phoneMD5, code, new NetCallback() {
             @Override
             public void onSuccess(String token) {
                 pd.dismiss();
@@ -112,9 +112,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 finish();
             }
-        }, new Login.FailCallback() {
+
             @Override
-            public void onFail() {
+            public void onFail(int errCode) {
                 pd.dismiss();
                 Toast.makeText(LoginActivity.this, R.string.fail_to_login, Toast.LENGTH_LONG).show();
             }
@@ -130,15 +130,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         final ProgressDialog pd = ProgressDialog.show(this, getResources().getString(R.string.connecting),
                 getResources().getString(R.string.connecting_to_server));
-        new GetVerificationCode(phone, new GetVerificationCode.SuccessCallback() {
+        new GetVerificationCode(phone, new NetCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(String result) {
                 pd.dismiss();
                 Toast.makeText(LoginActivity.this, R.string.success_to_get_verification_code, Toast.LENGTH_LONG).show();
             }
-        }, new GetVerificationCode.FailCallback() {
+
             @Override
-            public void onFail() {
+            public void onFail(int errCode) {
                 pd.dismiss();
                 Toast.makeText(LoginActivity.this, R.string.fail_to_get_verification_code, Toast.LENGTH_LONG).show();
             }
