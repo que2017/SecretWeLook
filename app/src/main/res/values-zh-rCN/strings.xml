@@ -24,5 +24,5 @@
     <string name="fail_to_publish_comment">发布评论失败，请稍后重试</string>
     <string name="contacts_permission_not_open">读取联系人权限没有开启！</string>
     <string name="comment_cannot_be_empty">评论内容不能为空</string>
-    <string name="message_cannot_be_empty">Message content can not be empty</string>
+    <string name="message_cannot_be_empty">消息内容不能为空</string>
 </resources>
